@@ -65,10 +65,15 @@
       display: none;
       margin-top: 20px;
       text-align: center;
+      position: relative;
+      width: 90%;
+      max-width: 1000px;
     }
 
     video {
       max-width: 100%;
+      width: 100%;
+      height: auto;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     }
@@ -77,6 +82,39 @@
       margin-top: 10px;
       font-size: 18px;
       color: #b0b0b0;
+    }
+
+    #fullscreenBtn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 8px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    #fullscreenBtn:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      input, button {
+        width: 90%;
+      }
+
+      video {
+        width: 100%;
+        height: auto;
+      }
     }
   </style>
 </head>
@@ -88,10 +126,11 @@
   <button onclick="loadVideo()">読み込む</button>
 
   <div id="videoContainer">
-    <video id="videoPlayer" controls autoplay>
+    <video id="videoPlayer" autoplay>
       <source id="videoSource" src="" type="video/mp4">
       お使いのブラウザでは再生がサポートされていません。
     </video>
+    <button id="fullscreenBtn" onclick="toggleFullscreen()">全画面</button>
     <p id="status">視聴しています...</p>
   </div>
 
@@ -142,6 +181,20 @@
         video.src = '';  
       });
     }
+
+    function toggleFullscreen() {
+      const videoContainer = document.getElementById('videoContainer');
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        videoContainer.requestFullscreen();
+      }
+    }
+
+    // Disable right-click and video download
+    document.getElementById('videoPlayer').addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+    });
   </script>
 </body>
 </html>
