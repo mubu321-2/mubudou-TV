@@ -81,18 +81,18 @@
   </style>
 </head>
 <body>
-  <h1>ライブ視聴ページ</h1>
+  <h1>mubudou TV</h1>
   
-  <label for="videoIdInput">Google Drive動画IDを入力してください:</label>
+  <label for="videoIdInput">視聴IDを入力してください:</label>
   <input type="text" id="videoIdInput" placeholder="例: abc123xyz">
-  <button onclick="loadVideo()">動画を読み込む</button>
+  <button onclick="loadVideo()">読み込む</button>
 
   <div id="videoContainer">
     <video id="videoPlayer" controls autoplay>
       <source id="videoSource" src="" type="video/mp4">
-      お使いのブラウザでは動画再生がサポートされていません。
+      お使いのブラウザでは再生がサポートされていません。
     </video>
-    <p id="status">動画を視聴しています...</p>
+    <p id="status">視聴しています...</p>
   </div>
 
   <script>
@@ -102,7 +102,7 @@
       const videoId = videoIdInput.value.trim();
       
       if (watchedVideos.includes(videoId)) {
-        document.getElementById('status').innerText = 'この動画はすでに視聴済みです。';
+        document.getElementById('status').innerText = 'これは視聴済みです。';
         document.getElementById('videoIdInput').disabled = true;
         document.querySelector('button').disabled = true;
       }
@@ -115,7 +115,7 @@
       const videoContainer = document.getElementById('videoContainer');
 
       if (!videoId) {
-        status.innerText = '動画IDを入力してください。';
+        status.innerText = 'IDを入力してください。';
         videoContainer.style.display = 'none';
         return;
       }
@@ -123,7 +123,7 @@
       let watchedVideos = JSON.parse(localStorage.getItem('watchedVideos')) || [];
 
       if (watchedVideos.includes(videoId)) {
-        status.innerText = 'この動画はすでに視聴済みです。';
+        status.innerText = 'これは視聴済みです。';
         videoContainer.style.display = 'none';
         return;
       }
@@ -132,7 +132,7 @@
       
       videoSource.src = videoUrl;
       videoContainer.style.display = 'block';
-      status.innerText = '動画を視聴しています...';
+      status.innerText = '視聴しています...';
 
       const video = document.getElementById('videoPlayer');
       video.addEventListener('ended', function() {
