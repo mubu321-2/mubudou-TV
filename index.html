@@ -70,10 +70,10 @@
       max-width: 1000px;
     }
 
-    video {
+    iframe {
       max-width: 100%;
       width: 100%;
-      height: auto;
+      height: 56.25vw;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     }
@@ -111,7 +111,7 @@
         width: 90%;
       }
 
-      video {
+      iframe {
         width: 100%;
         height: auto;
       }
@@ -126,10 +126,7 @@
   <button onclick="loadVideo()">読み込む</button>
 
   <div id="videoContainer">
-    <video id="videoPlayer" autoplay>
-      <source id="videoSource" src="" type="video/mp4">
-      お使いのブラウザでは再生がサポートされていません。
-    </video>
+    <iframe id="videoPlayer" frameborder="0" allow="autoplay; fullscreen"></iframe>
     <button id="fullscreenBtn" onclick="toggleFullscreen()">全画面</button>
     <p id="status">視聴しています...</p>
   </div>
@@ -149,9 +146,9 @@
 
     function loadVideo() {
       const videoId = document.getElementById('videoIdInput').value.trim();
-      const videoSource = document.getElementById('videoSource');
       const status = document.getElementById('status');
       const videoContainer = document.getElementById('videoContainer');
+      const videoPlayer = document.getElementById('videoPlayer');
 
       if (!videoId) {
         status.innerText = 'IDを入力してください。';
@@ -167,9 +164,9 @@
         return;
       }
 
-      const videoUrl = `https://drive.google.com/uc?export=view&id=${videoId}`;
+      const videoUrl = `https://drive.google.com/file/d/${videoId}/preview`;
       
-      videoSource.src = videoUrl;
+      videoPlayer.src = videoUrl;
       videoContainer.style.display = 'block';
       status.innerText = '視聴しています...';
 
@@ -178,7 +175,6 @@
         status.innerText = '再視聴はできません。';
         watchedVideos.push(videoId);
         localStorage.setItem('watchedVideos', JSON.stringify(watchedVideos));
-        video.src = '';  
       });
     }
 
@@ -191,7 +187,7 @@
       }
     }
 
-    // Disable right-click and video download
+    // Disable right-click
     document.getElementById('videoPlayer').addEventListener('contextmenu', function(event) {
       event.preventDefault();
     });
